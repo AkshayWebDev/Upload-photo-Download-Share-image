@@ -1,0 +1,488 @@
+{%extends 'web/base.html.j2'%}
+{%block extra_meta%}
+{%endblock%}
+{% block custom_head %}
+<style media="screen">
+
+  .game-card{
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    background: #fff;
+    padding: 13px;
+  }
+
+  #collage hr{
+    border:none;
+    border-top:2px solid #f5f2f2;
+    height:1px;
+}
+
+#collage #playPanel {
+    background-color:#fff;
+    padding:15px;
+    margin: 0px auto;
+    max-width:800px;
+    width:100%;
+}
+
+#collage #actualImageBox {
+    display: inline-block;
+    vertical-align: top;
+    width:100%;
+}
+
+#collage #stepBox, #collage #timeBox {
+    display:inline-block;
+    width:48%;
+}
+
+#collage #stepBox div {
+    background-color:#c2defc;
+    display:inline-block;
+    padding:1px 4px;
+    margin: 0px auto;
+    max-width:800px;
+}
+
+#collage img#actualImage{
+    margin-top: 20px;
+    height:100%;
+    width:100%;
+}
+
+#collage #sortable {
+    list-style-type: none;
+    display: inline-block;
+    margin: 0px;
+    padding: 0;
+    width: 404px;
+}
+
+    #collage #sortable li {
+        background-size: 400% 400%;
+        border: none;
+        cursor: pointer;
+        margin: 0;
+        padding: 0;
+        float: left;
+        width: 100px;
+        height: 100px;
+    }
+
+.btn.btn-primary  {
+  border: none;
+  display: inline;
+  font-size: 17px;
+  height: auto;
+  width: auto;
+  padding: 8px 8px;
+  margin: 0;
+  color: #343a40;
+}
+.btn.btn-primary:focus{
+  border: none;
+}
+
+#gameOver{
+  border: 1px solid #fa694c;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#gameOver h2{
+  font-size: 4rem;
+}
+#gameOver p.title{
+      font-size: 2rem;
+      color: #333 !important;
+      font-weight: 500;
+}
+#gameOver p{
+  font-size: 1.5rem;
+}
+
+/* mobile */
+.puzzle-container {
+  max-width: 70rem;
+  width: 90%;
+  position: relative;
+  margin: 0 auto;
+}
+
+.sr-only {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* .mainHeader */
+.mainHeader {
+  background: white;
+  display: flex;
+  padding: 1rem 3rem;
+  box-shadow: 0 0.1rem 1.4rem rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mainHeader__appName {
+  margin: 0;
+  font-weight: normal;
+  font-size: 2.6rem;
+}
+
+.twitterLink {
+  display: block;
+  height: 3.6rem;
+  box-sizing: content-box;
+  padding: 1rem;
+}
+
+.twitterLink > svg {
+max-height: 100%;
+max-width: 40px;
+}
+
+/* .gameArea */
+
+.select-puzzle{
+  margin-top: 10rem;
+}
+
+.gameArea {
+  margin-top: 3rem;
+  overflow: hidden;
+  transform: scale(.99);
+  background-color: white;
+  padding: 10px;
+}
+
+.gameArea__gameWrapper {
+  min-height: 70vh;
+  //max-height: 70vh;
+  border-radius: 5px;
+}
+
+.gameArea__game {
+  flex: 0 0 calc(100% - 23rem);
+}
+
+.gameArea__dashboard {
+  position: relative;
+  /* flex: 0 0 23rem;
+  padding: 8% 2rem 2rem 4rem;
+  height: inherit;
+  display: flex;
+  justify-content: space-between; */
+}
+.close-puzzle{
+  background: #ffc107;
+  padding: 1rem 4rem;
+  border: 1px solid #eee;
+  color: #000;
+  border-radius: 0.5rem;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.close-puzzle:focus, .close-puzzle:hover{
+  border-color: #ffc107;
+  outline: none;
+}
+
+.gameArea__button {
+  background: #092456;
+  padding: 1rem 4rem;
+  border: 1px solid #eee;
+  color: #fff;
+  border-radius: 0.5rem;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* .timer */
+
+.timer {
+  /* padding: 1rem; */
+  /* flex: 0 0 40%; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer__label {
+  display: block;
+  /* margin-bottom: 2rem; */
+  font-size: 14px;
+  padding-right: 10px;
+}
+
+.timer__value--minutes {
+  font-size: 3rem;
+}
+
+.timer__value--seconds {
+  font-size: 3rem;
+}
+.card{
+  margin-top: 0;
+  border: 1px solid #fcb404;
+  border-radius: 8px;
+  position: relative;
+  background: #2a2548;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-clip: border-box;
+  padding: 20px;
+}
+
+.play-btn{
+font-size: 16px;
+font-weight: 500;
+padding: 3px 30px;
+}
+
+.card img{
+object-fit: cover;
+margin: 10px 0 2rem;
+}
+
+.table tr td{
+/* display: flex;
+align-items: center; */
+padding: 20px;
+vertical-align: inherit;
+
+}
+@media (max-width: 991px) {
+.select-puzzle{
+  margin-top: 2rem;
+}
+.card img{
+
+}
+}
+/* mobile end */
+
+@media (max-width: 800px){
+  .game-card{
+    width: 100%;
+  }
+  #collage{
+    margin-top: 0;
+  }
+  #collage #sortable{
+    transform: scale(.75);
+    transform-origin: top left;
+  }
+  .h-100{
+    height: 100%;
+  }
+  main.game-page {
+    height: 100%;
+    padding-top: 10rem;
+    overflow-x: hidden;
+  }
+  main.game-page .login-footer {
+    position: relative !important;
+  }
+}
+
+@media (min-width: 1440px){
+  .game-card{
+    width: 60%;
+  }
+  #collage #playPanel{
+    max-width: 100%;
+  }
+  #collage #sortable{
+    width: 100%;
+    height: 100%;
+  }
+  #collage #sortable li{
+    width: 140px !important;
+    height: 140px !important;
+  }
+}
+
+@media (min-width: 1920px){
+  .gameArea__gameWrapper {
+    min-height: 50vh;
+    //max-height: 70vh;
+    border-radius: 5px;
+  }
+  .game-card{
+    width: 75%;
+  }
+  #collage #sortable{
+    width: 100%;
+    height: 100%;
+  }
+  #collage #sortable li{
+    width: 140px !important;
+    height: 140px !important;
+  }
+  #collage #playPanel{
+    max-width: 100%;
+  }
+}
+</style>
+{% endblock %}
+{%block header%}
+<header role="header" class="header py-10 game-header" style="z-index: auto;">
+  <nav class="nav" role="navigation">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-4 col-md text-left img-container">
+                  <img src="{{static('assets/images/main-logo.png')}}" class="img-fluid" alt="" width="250">
+              </div>
+              <div class="col-4 d-sm-flex align-items-center justify-content-center">
+
+              </div>
+              <div class="col-4 text-right img-container">
+                  <img src="{{static('assets/images/loginLogo.png')}}" class="img-fluid" alt="" width="250">
+              </div>
+          </div>
+      </div>
+  </nav>
+  </header>
+
+{%endblock%}
+{%block content%}
+  <!-- main -->
+  <main class="app main game-page d-none d-md-block" role="main" >
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-12 col-lg-12 col-md-12">
+
+          <div class="game-card">
+            <!-- <p class="h3">Start Game</p> -->
+            <img src="{{static('assets/images/puzzle.jpg')}}" alt="" class="img-fluid">
+            <button type="button" class="btn btn-primary mt-5" data-play-game>Start Game</button>
+          </div>
+
+          <!-- puzzle -->
+          <div id="collage" style="display: none;">
+              <!-- <h2>Picture Puzzle</h2> -->
+
+              <div id="playPanel">
+                  <!-- <h3 id="imgTitle"></h3> <hr /> -->
+                  <div class="row">
+                    <div class="col-md-7 col-12">
+                      <ul id="sortable" class="sortable"></ul>
+                    </div>
+                    <div class="col-md-5 col-12 text-center">
+                      <div id="actualImageBox">
+                          <div id="stepBox" class="text-left">
+                              <div>Count:</div><div class="stepCount">0</div>
+                          </div>
+                          <div id="timeBox" class="text-right h4">
+                              Time: <span id="timerPanel"></span> seconds
+                          </div>
+                          <img id="actualImage" />
+                          <div>See the picture and solve the puzzle.</div>
+                      </div>
+
+                      <div id="gameOver" style="display:none;">
+                          <div>
+                              <h2>Game over !!</h2>
+                              <p class="title">Congratulations!! </p>
+                              <p> You got the picture ready.</p>
+
+                              <p>Time: <span class="stepCount">0</span> gear.</p>
+
+                              <p>Time spent: <span class="timeCount">0</span> seconds</p>
+                              <div>
+                                  <button type="button" class="btn btn-primary" onclick="window.location.reload(true);">Re-Play Game</button>
+                              </div>
+                          </div>
+                      </div>
+
+                    </div>
+                  </div>
+              </div>
+          </div>
+          <!-- puzzle end -->
+
+        </div>
+      </div>
+    </div>
+    <div class="text-center py-md-0 py-5 position-fixed login-footer">
+      <p class="text-white h5">Copyright @ <a href="https://storytech.live/" target="_blank" class="text-white">storytech.live</a> | All right reserved.</p>
+    </div>
+  </main>
+<!-- main end -->
+
+<!-- for mobile  -->
+<main class="app main game-page d-block d-md-none" role="main" >
+  <div class="container h-100">
+    <div class="row h-100 align-items-center">
+      <div class="col-12 col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+        <section class="gameArea">
+          <h1 class="sr-only">Puzzle</h1>
+          <div class="gameArea__gameWrapper">
+            <div id="gameContainer" class="gameArea__game"></div>
+            <div class="gameArea__dashboard text-center">
+              <div class="timer">
+                <span class="timer__label h5 m-0 font-weight-bold">Time:</span>
+                <div class="timer__time">
+                  <span id="minute" class="timer__value timer__value--minutes">00</span>
+                  <span class="unit">min</span>
+                </div>
+                <div class="timer__time pl-3">
+                  <span id="seconds" class="timer__value timer__value--seconds">00</span>
+                  <span class="unit">s</span>
+                </div>
+              </div>
+  <!--             <div class="imgWrapper" id="preview"></div> -->
+              <div class="d-flex align-items-center justify-content-center">
+                <button id="startButton" class="gameArea__button mr-3 position-relative">Start</button>
+                <button class="close-puzzle">Close</button>
+              </div>
+
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  <div class="text-center position-fixed login-footer">
+    <p class="text-white h5">Copyright @ <a href="https://storytech.live/" target="_blank" class="text-white">storytech.live</a> | All right reserved.</p>
+  </div>
+</main>
+<!-- for mobile end -->
+
+{%endblock%}
+
+{% block extra_footer_script %}
+<script>
+
+    var images = [
+        { src: "{{static('assets/images/puzzle.jpg')}}", title: 'Neeruti manor' },
+        { src: "{{static('assets/images/puzzle.jpg')}}", title: 'Harju-Madis Church' },
+        { src: "{{static('assets/images/puzzle.jpg')}}", title: 'Rahumäe train station' },
+        { src: "{{static('assets/images/puzzle.jpg')}}", title: 'Kakumäe Harbor' },
+        { src: "{{static('assets/images/puzzle.jpg')}}", title: 'Kohila mill' }
+    ];
+
+    $(function () {
+      $('[data-play-game]').click(function () {
+        $(this).parent().hide();
+        $('#collage').show();
+        imagePuzzle.startGame(images);
+      });
+    });
+</script>
+<script src="{{static('assets/script/vendor/jquery-ui.js')}}"></script> <!-- custom -->
+<script src="{{static('assets/script/app/image-puzzle.js')}}"></script> <!-- custom -->
+<script src="{{static('assets/script/vendor/puzzle_lib.js')}}"></script> <!-- custom -->
+<script src="{{static('assets/script/app/puzzle.js')}}"></script> <!-- custom -->
+{% endblock %}

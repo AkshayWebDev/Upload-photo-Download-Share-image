@@ -1,0 +1,307 @@
+{%extends 'web/base.html.j2'%}
+{%block extra_meta%} {%endblock%}
+{% block custom_head %}
+{% endblock %}
+{%block content%}
+<div class="loader d-none">
+  <div class="loading"></div>
+</div>
+
+      <section class="content_sec mrgnt-5">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-8 offset-md-2 text-center">
+                  <div class="logo mb-5">
+                     <img src="{{static('assets/images/wella-logo.png')}}" alt="Wella Company" />
+                     <strong class="tagLine d-block text-red mt-2">#ReopenWithWella</strong>
+                  </div>
+               </div>
+            </div>
+            <div class="row d-flex flex-column-reverse flex-lg-row">
+               <div class="col-md-6">
+                  <h2 class="h2 text-center mb-3">Vaccination FAQs</h2>
+                  <div class="faq">
+                     <h3 class="bg-red text-white py-2 px-2">1. Where should I register for the vaccination drive?</h3>
+                     <div class="card-body">
+                        Please register on the CoWin platform and note your COWIN Ref. ID. Use this while Registering for the #MakeChange Vaccination Drive (using the Link shared with you). Post Registration, we will share a confirmation and as per availability. a slot will be shared with you closer to the Date of the Vaccination Drive.
+                     </div>
+                     <h3 class="bg-red text-white py-2 px-2">2. Which Covid-19 Vaccine will be administered?</h3>
+                     <div class="card-body">
+                        We are administering Covishield vaccine. developed by the Pune-based Serum Institute of India, across select cities to our employees & salon community
+                     </div>
+                     <h3 class="bg-red text-white py-2 px-2">3. Can I choose my Vaccination Slot time?</h3>
+                     <div class="card-body">
+                        These will be auto-allocated by us and we will provide the details.
+                     </div>
+                     <h3 class="bg-red text-white py-2 px-2">4. What is the Eligibility Criteria for the Vaccine?</h2>
+                     <div class="card-body">
+                        As per Ministry of Health India, anyone above the age of 18 years can get the Vaccine.
+                     </div>
+                     <h3 class="bg-red text-white py-2 px-2">5. Are there any other Exclusion Criteria to avoid Vaccination</h3>
+                     <div class="card-body">
+                        <p><b>As per Ministry of Health India, following should avoid Vaccination</b></p>
+                        <p>You are a pregnant woman/ unsure of whether you are pregnant</p>
+                        <p>You have had SARS-COV2 infection in the last 4-8 weeks. Wait for 4-8 weeks after recovery from COVID symptoms before getting the vaccine.</p>
+                        <p>The Health Ministry has advised caution for those with history of bleeding or coagulation diseases.</p>
+                        <p>You are an acutely unwell or hospitalized</p>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <h2 class="h2 text-center mb-3">Register Here</h2>
+                  <div class="register_form">
+                     <form id="form" method="post" action="{{url('register')}}" csrftoken="{{csrf_token}}" novalidate>{{csrf_input}}
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="form-group">
+                                 <label for="fullName">Full Name*</label>
+                                  {{ form.name }}
+                                  <span class="form-text text-red small" id="name_error"></span>
+{#                                 <input type="text" name="fullName" class="form-control" placeholder="Enter Your Full Name Here" />#}
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-8 col-7">
+                              <div class="form-group">
+                                 <label for="salonName">Salon Name*</label>
+                                  {{ form.salon_name }}
+                                  <span class="form-text text-red small" id="salon_name_error"></span>
+
+{#                                 <input type="text" name="salonName" class="form-control" placeholder="Enter Your Full Name Here" />#}
+                              </div>
+                           </div>
+                           <div class="col-md-4 col-5">
+                              <div class="form-group">
+
+                                 <label for="salonName">Gender*</label>
+                                  <select class="form-control" name="gender">
+                                      <option value="" selected disabled>Choose One</option>
+                                      <option value="Male">Male</option>
+                                      <option value="Female">Female</option>
+                                  </select>
+                                    <span class="form-text text-red small" id="gender_error"></span>
+
+{#                                 <select class="form-control">#}
+{#                                    <option>Choose One</option>#}
+{#                                    <option>Male</option>#}
+{#                                    <option>Female</option>#}
+{#                                 </select>#}
+
+
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-8 col-7">
+                              <div class="form-group">
+                                 <label for="salonName">Date of Birth* <span class="small-text text-red">(18 years +)</span></label>
+                                  {# {{ form.date_of_birth }} #}
+                                  <input type="date" name="date_of_birth" class="form-control" required="" id="id_date_of_birth">
+                                  <span class="form-text text-red small" id="date_of_birth_error"></span>
+{#                                 <input type="date" name="salonName" class="form-control" placeholder="1993-09-19" />#}
+                              </div>
+                           </div>
+                           <div class="col-md-4 col-5">
+                              <div class="form-group">
+                                 <label for="salonName">City*</label>
+                                  {{ form.city }}
+                                  <span class="form-text text-red small" id="city_error"></span>
+{#                                 <input type="text" name="salonName" class="form-control" placeholder="Delhi" />#}
+                              </div>
+                           </div>
+                        </div>
+                                  {{ form.city_vaccination }}
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="form-group">
+                                 <label for="email">Email Address*</label>
+                                  {{ form.email }}
+                                  <span class="form-text text-red small" id="email_error"></span>
+
+{#                                 <input type="email" name="email" class="form-control" placeholder="Enter Your Email ID" />#}
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="form-group">
+                                 <label for="email">Mobile Number* <span class="small-text text-red">(Same as used for registration on COWIN)</span></label>
+                                  {{ form.contact_no }}
+                                  <span class="form-text text-red small" id="contact_no_error"></span>
+{#                                 <input type="email" name="email" class="form-control" placeholder="Enter Your Mobile Number" />#}
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="form-group">
+                                 <label for="email">COWIN Reference ID</label>
+                                  {{ form.cowin_reference_id }}
+{#                                 <input type="email" name="email" class="form-control" placeholder="Enter Your COWIN Reference ID" />#}
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-8 col-7">
+                              <div class="form-group">
+                                  <label for="salonName">I am*</label>
+                                  <select class="form-control" name="type">
+                                      <option value="" selected disabled>Choose any one</option>
+                                      <option value="Stylist">Stylist</option>
+                                      <option value="Salon Owner">Salon Owner</option>
+                                      <option value="Beautician">Beautician</option>
+                                      <option value="Wella Employee">Wella Employee</option>
+                                      <option value="Others">Others</option>
+                                  </select>
+                                  <span class="form-text text-red small" id="type_error"></span>
+
+                                  {#                                 <select class="form-control">#}
+{#                                    <option>Choose One</option>#}
+{#                                    <option>Male</option>#}
+{#                                    <option>Female</option>#}
+{#                                 </select>#}
+                              </div>
+                           </div>
+                           <div class="col-md-4 col-5">
+                              <div class="form-group">
+                                 <label for="salonName">&nbsp;</label>
+                                 <button class="btn bg-red text-white w-100" type="Submit">Submit</button>
+                              </div>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      {%endblock%}
+
+
+{% block extra_footer_script %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $("#form").submit(function (e) {
+            e.preventDefault();
+            console.log("working here!!");
+            $('.loader').removeClass('d-none');
+            var serializedData = $(this).serialize() + '&=city_name' + $('.closeBtn').attr("id");
+            $.ajax({
+                type: 'POST',
+                url: "{{url('vaccine-registration', args=[city_obj.slug,])}}",
+                data: serializedData,
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    $('.loader').addClass('d-none');
+                    {#alert("done");#}
+                    location.href='/thank-you/'
+                },
+                error: function (error) {
+                    $('.loader').addClass('d-none');
+
+                    var errorData = error.responseJSON;
+                    if (errorData.name) {
+                        $("#name_error").html(errorData.name);
+                    } else {
+                        $("#name_error").html("");
+                    }
+                    if (errorData.email) {
+                        $("#email_error").html(errorData.email);
+
+                    } else {
+                        $("#email_error").html("");
+                    }
+                    if (errorData.contact_no) {
+                        $("#contact_no_error").html(errorData.contact_no);
+
+                    } else {
+                        $("#contact_no_error").html("");
+                    }
+                    if (errorData.salon_name) {
+                        $("#salon_name_error").html(errorData.salon_name);
+
+                    } else {
+                        $("#salon_name_error").html("");
+                    }
+                    if (errorData.state) {
+                        $("#state_error").html(errorData.state);
+
+                    } else {
+                        $("#state_error").html("");
+                    }
+                    if (errorData.type) {
+                        $("#type_error").html(errorData.type);
+
+                    } else {
+                        $("#type_error").html("");
+                    }
+                    if (errorData.city_vaccination) {
+                        $("#city_vaccination_error").html(errorData.city_vaccination);
+                    } else {
+                        $("#city_vaccination_error").html("");
+                    }
+                    if (errorData.gender) {
+                        $("#gender_error").html(errorData.gender);
+                    } else {
+                        $("#gender_error").html("");
+                    }
+                    if (errorData.cowin_reference_id) {
+                        $("#cowin_reference_id").html(errorData.cowin_reference_id);
+                    } else {
+                        $("#cowin_reference_id").html("");
+                    }
+                    if (errorData.date_of_birth) {
+                        $("#date_of_birth_error").html(errorData.date_of_birth);
+                    } else {
+                        $("#date_of_birth_error").html("");
+                    }
+                    if (errorData.city) {
+                        $("#city_error").html(errorData.city);
+                    } else {
+                        $("#city_error").html("");
+                    }
+                }
+            })
+        });
+
+    </script>
+
+    <script>
+          // var input = document.getElementById("id_date_of_birth");
+          // var today = new Date();
+          // var day = today.getDate();
+          //
+          // // Set month to string to add leading 0
+          // var mon = new String(today.getMonth()+1); //January is 0!
+          // var yr = today.getFullYear();
+          //
+          //   if(mon.length < 2) { mon = "0" + mon; }
+          //   if(day.length < 2) { dayn = "0" + day; }
+          //
+          //   var date = new String( yr + '-' + mon + '-' + day );
+          //
+          // input.disabled = false;
+          // input.setAttribute('max', date);
+
+          $(function(){
+              var dtToday = new Date();
+
+              var month = dtToday.getMonth() + 1;// jan=0; feb=1 .......
+              var day = dtToday.getDate();
+              var year = dtToday.getFullYear() - 18;
+              if(month < 10)
+                  month = '0' + month.toString();
+              if(day < 10)
+                  day = '0' + day.toString();
+              var minDate = year + '-' + month + '-' + day;
+              var maxDate = year + '-' + month + '-' + day;
+            $('#id_date_of_birth').attr('min', maxDate);
+            $('#id_date_of_birth').attr('max', dtToday.getFullYear() + '-' + month + '-' + day);
+          });
+    </script>
+
+
+{% endblock %}
